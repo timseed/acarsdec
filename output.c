@@ -194,8 +194,8 @@ static void printtime(struct timeval tv)
 
 	gmtime_r(&(tv.tv_sec), &tmp);
 
-	fprintf(fdout, "%02d:%02d:%02d.%03ld",
-		tmp.tm_hour, tmp.tm_min, tmp.tm_sec, tv.tv_usec/1000);
+	fprintf(fdout, "%02d:%02d:%02d",
+		tmp.tm_hour, tmp.tm_min, tmp.tm_sec);
 }
 
 static void printdate(struct timeval tv)

@@ -25,6 +25,7 @@
 #include <pthread.h>
 #include <math.h>
 #include <rtl-sdr.h>
+#include "rtl.h"
 #include "acarsdec.h"
 
 // set the sameple rate by changing RTMULT

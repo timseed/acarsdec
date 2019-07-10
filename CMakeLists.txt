@@ -1,9 +1,9 @@
 cmake_minimum_required (VERSION 3.2)
 project (acarsdec C)
 
-add_compile_options(-Ofast -march=native )
+#add_compile_options(-Ofast -march=native )
 
-add_executable(acarsdec acars.c  acarsdec.c  cJSON.c  label.c  msk.c  output.c )
+add_executable(acarsdec acars.c  acarsdec.c acarsdec.h  cJSON.c  label.c  msk.c  output.c rtl.c rtl.h)
 
 find_library(LIBACARS acars)
 if(LIBACARS)
@@ -16,14 +16,16 @@ endif()
 
 option(rtl "Compiling for rtl sdr" )
 if(rtl)
-find_library(LIBRTL rtlsdr)
-if(NOT LIBRTL)
-message (FATAL_ERROR "librtlsdr path not found")
+  find_library(LIBRTL rtlsdr)
+  if(LIBRTL)
+	add_definitions(-DWITH_RTL )
+	include_directories(/usr/local/Cellar/librtlsdr/0.6.0/include/)
+	target_link_libraries( acarsdec ${LIBRTL})
+  else()
+	message (FATAL_ERROR "librtlsdr path not found")
+  endif()
 endif()
-add_definitions(-DWITH_RTL )
-target_sources( acarsdec PRIVATE rtl.c)
-target_link_libraries( acarsdec ${LIBRTL})
-endif()
+
 
 option(airspy "Compiling for airspy sdr" )
 if(airspy)
